@@ -16,13 +16,11 @@ MusicSQL::MusicSQL(QObject* parent)
 	{
 		qDebug() << "Error: connection with database failed 16";
 	}
-
+	
 	QString createSql = "CREATE TABLE IF NOT EXISTS music ("
-		"url TEXT UNIQUE)";  //创建或者打开一个只存储唯一url的表
-
+		"url TEXT UNIQUE, isLike INT)";  //创建或者打开一个只存储唯一url的表 和是否收藏 0否 1是
 	if (!_query->exec(createSql))
 	{
-
 		qDebug() << "建表失败: " << _query->lastError().text();
 		exit(0);
 	}
@@ -41,9 +39,8 @@ MusicSQL* getMusicSQLInstance()
 }
 
 
-QStringList MusicSQL::read()
+void MusicSQL::read(QStringList& urlOut, std::vector<bool>& isLikeOut)
 {
-	QStringList out;
 	if (!_query->exec("SELECT * FROM music")) 
 	{
 		qDebug() << "读取失败:" << _query->lastError().text();
@@ -64,20 +61,40 @@ QStringList MusicSQL::read()
 			// int id = query.value("id").toInt();
 
 			// 4. 在这里处理你的数据 (比如打印，或者添加到列表里)
-			out.append(url);
+			bool isLike = (_query->value("isLike").toInt() == 0 ? false : true);
+			urlOut.append(url);
+			isLikeOut.push_back(isLike);
 		}
 	}
-	return out;
 }
 
-void MusicSQL::write(QString url)
+void MusicSQL::write(QString url, bool isLike)
 {
-	QString insertSql = "insert or ignore into music (url) values (':url')"; 
+	//有则更新没有则插入
+	QString insertSql = "insert or replace into music (url, isLike) values (':url', :isLike)"; 
 	insertSql.replace(":url", url);
-
+	if (isLike)
+	{
+		//喜欢
+		insertSql.replace(":isLike", "1");
+	}
+	else
+	{
+		insertSql.replace(":isLike", "0");
+	}
+	qDebug() << insertSql;
 	if (!_query->exec(insertSql))
 	{
 		qDebug() << "插入失败: 64" << _query->lastError().text();
 	}
 }
 
+void MusicSQL::deleteByUrl(QString url)
+{
+	QString insertSql = "DELETE FROM music WHERE url = ':url'; ";
+	insertSql.replace(":url", url);
+	if (!_query->exec(insertSql))
+	{
+		qDebug() << "删除失败: 98" << _query->lastError().text();
+	}
+}

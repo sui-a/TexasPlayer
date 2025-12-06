@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <QMediaPlayer>
+#include <deque>
 #include <string>
 #include <functional>
 #include <unordered_map>
@@ -75,6 +76,9 @@ public:
 	//百分比设置
 	void setPercentagePosition(int tar);
 
+	//根据下标删除音乐
+	void deleteMusic(int n);
+
 private:
 	MusicList();
 private:
@@ -101,7 +105,7 @@ private:
 
 	//使用四层链表存储音乐类
 	//默认链表
-	std::vector<MusicMonomer*> _defaultHead;
+	std::deque<MusicMonomer*> _defaultHead;
 	//我喜欢
 	MusicMonomer* _likeHead;
 	int _likeCount;

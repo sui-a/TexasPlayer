@@ -4,6 +4,7 @@
 #include <QtWidgets/QWidget>
 #include <string>
 #include <QAudioOutput>
+#include <QFileInfo>
 #include <time.h>
 #include "MusicMonomer.hpp"
 #include "MusicList.h"
@@ -34,8 +35,48 @@ void MusicList::playInit()
 
 void MusicList::dbInit()
 {
-	auto res = getMusicSQLInstance()->read();
-	addMusic(res);
+	QStringList urlOut;
+	std::vector<bool> isLikeOut;
+	getMusicSQLInstance()->read(urlOut, isLikeOut);
+	for(int i = 0; i < urlOut.size(); i++)
+	{
+		//判断音乐是否还存在，不存在从数据库中删除
+		if (QFileInfo::exists(urlOut[i]))
+		{
+			//存在
+			//根据url添加音乐
+			size_t n = _defaultHead.size();
+			_defaultHead.push_back(new MusicMonomer(urlOut[i]));
+			_mapToGroup[urlOut[i]] = n;
+			//头插进本地链表
+			_defaultHead[n]->setLocalNext(_localHead);
+			if (_localHead != nullptr)
+			{
+				_localHead->setLocalPre(_defaultHead[n]);
+			}
+			_localCount++;
+			_localHead = _defaultHead[n];
+			_defaultHead[n]->setLike(isLikeOut[i]);
+			if (isLikeOut[i])
+			{
+				//头插进喜欢链表
+				if (_likeHead != nullptr)
+				{
+					_likeHead->setLikePre(_defaultHead[n]);
+				}
+				_defaultHead[n]->setLikeNext(_likeHead);
+				_likeCount++;
+				_likeHead = _defaultHead[n];
+			}
+			_mapToInt[(_defaultHead[n]->getMusicId())] = n;
+		}
+		else
+		{
+			//不存在
+			getMusicSQLInstance()->deleteByUrl(urlOut[i]);
+		}
+		//
+	}
 }
 
 MusicList::~MusicList()
@@ -84,7 +125,7 @@ void MusicList::addMusic(QStringList url)
 		_defaultHead[n]->setLike(false);
 		_mapToInt[(_defaultHead[n]->getMusicId())] = n;
 
-		getMusicSQLInstance()->write(it); //将url写入数据库中
+		getMusicSQLInstance()->write(it, _defaultHead[n]->getLike()); //将url写入数据库中
 	}
 }
 
@@ -177,9 +218,96 @@ void MusicList::setLike(QString id, bool like)
 			}
 			//
 		}
+		getMusicSQLInstance()->write(_defaultHead[n]->getUrl(), _defaultHead[n]->getLike());
 		//
 	}
 	//没有找到，不操作
+}
+
+void MusicList::deleteMusic(int n)
+{
+	//对数组内容进行删除
+	//从本地链表中删除
+	MusicMonomer* next = _defaultHead[n]->getLocalNext();
+	MusicMonomer* pre = _defaultHead[n]->getLocalPre();
+	if( next == nullptr && pre == nullptr)
+	{
+		//唯一节点
+		_localHead = nullptr;
+		return;
+	}
+	else
+	{
+		if (next)
+		{
+			next->setLocalPre(pre);
+		}
+		if (pre)
+		{
+			pre->setLocalNext(next);
+		}
+		if (_defaultHead[n] == _localHead)
+		{
+			_localHead = nullptr;
+		}
+	}
+	//喜欢链表
+	next = _defaultHead[n]->getLikeNext();
+	pre = _defaultHead[n]->getLikePre();
+	if (next == nullptr && pre == nullptr)
+	{
+		//唯一节点
+		_likeHead = nullptr;
+		return;
+	}
+	else
+	{
+		if (next)
+		{
+			next->setLikePre(pre);
+		}
+		if (pre)
+		{
+			pre->setLikeNext(next);
+		}
+		if (_defaultHead[n] == _likeHead)
+		{
+			_likeHead = nullptr;
+		}
+	}
+
+	//历史链表
+	next = _defaultHead[n]->getHistoryNext();
+	pre = _defaultHead[n]->getHistoryPre();
+	if (next == nullptr && pre == nullptr)
+	{
+		//唯一节点
+		_historyHead = nullptr;
+		return;
+	}
+	else
+	{
+		if (next)
+		{
+			next->setHistoryPre(pre);
+		}
+		if (pre)
+		{
+			pre->setHistoryNext(next);
+		}
+		if (_defaultHead[n] == _historyHead)
+		{
+			_historyHead = nullptr;
+		}
+	}
+
+	//开始删除默认链表中的节点
+
+	if (n >= 0 && n < _defaultHead.size())
+	{
+		// 2. 直接定位并删除
+		_defaultHead.erase(_defaultHead.begin() + n);
+	}
 }
 
 void MusicList::playMusic(QString id, QString style)
@@ -188,6 +316,19 @@ void MusicList::playMusic(QString id, QString style)
 	{
 		//找到下标
 		int n = _mapToInt[id];
+		if (!QFileInfo::exists(_defaultHead[n]->getUrl()))
+		{
+			//判断路径失效
+			//根据下标进行歌曲删除
+			deleteMusic(n);
+			//删除数据库中的记录
+			getMusicSQLInstance()->deleteByUrl(_defaultHead[n]->getUrl());
+			//让ui界面进行刷新
+
+			return;
+		}
+
+
 		_defaultHead[n]->play(_musicPlayer);
 		//修改为播放状态
 		_playingHead = _defaultHead[n];

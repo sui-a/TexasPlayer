@@ -18,8 +18,11 @@ public:
 	~MusicSQL();
 
 	//开始读取数据库
-	QStringList read();
-	void write(QString url);
+	void read(QStringList& urlOut, std::vector<bool>& isLikeOut);
+	//通过url写
+	void write(QString url, bool isLike);
+	//删
+	void deleteByUrl(QString url);
 
 private:
 	MusicSQL(QObject* parent = nullptr);

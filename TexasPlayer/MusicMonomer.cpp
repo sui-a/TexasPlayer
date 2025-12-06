@@ -204,3 +204,8 @@ void MusicMonomer::setHistoryPre(MusicMonomer* pre)
 {
 	_historyPre = pre;
 }
+
+bool MusicMonomer::getLike() const
+{
+	return _isLike;
+}

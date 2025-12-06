@@ -22,6 +22,7 @@ public:
 	QString getMusicId() const;
 	QString getUrl() const;
 	void getUrl(QString& url) const;
+	bool getLike() const;
 
 	void play(QMediaPlayer& player);
 
