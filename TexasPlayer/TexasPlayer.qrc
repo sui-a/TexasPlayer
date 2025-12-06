@@ -1,0 +1,60 @@
+<RCC>
+    <qresource prefix="/">
+        <file>texas_head.jpg</file>
+        <file>like.png</file>
+        <file>min.png</file>
+        <file>noLike.png</file>
+        <file>maxMize.png</file>
+        <file>shut.png</file>
+        <file>clothes.png</file>
+        <file>circulation.png</file>
+        <file>greaterThan.png</file>
+        <file>lessThan.png</file>
+        <file>pause.png</file>
+        <file>play.png</file>
+        <file>randomness.png</file>
+        <file>mute.png</file>
+        <file>volume.png</file>
+        <file>add.png</file>
+        <file>lyrics.png</file>
+        <file>likeIcon.png</file>
+        <file>musicNote.png</file>
+        <file>tv.png</file>
+        <file>download.png</file>
+        <file>history.png</file>
+        <file>musicLike.png</file>
+        <file>invertedTriangle.png</file>
+        <file>barVolume.png</file>
+        <file>barMute.png</file>
+        <file>playListLoop.png</file>
+        <file>playSingleSong.png</file>
+        <file>playSingleSongRepeat.png</file>
+        <file>lrcGround.png</file>
+        <file>pullDown.png</file>
+    </qresource>
+    <qresource prefix="/image">
+        <file>001.jpg</file>
+        <file>002.jpg</file>
+        <file>003.jpg</file>
+        <file>004.jpg</file>
+        <file>005.jpg</file>
+        <file>006.jpg</file>
+        <file>007.jpg</file>
+        <file>008.jpg</file>
+        <file>009.jpg</file>
+        <file>010.jpg</file>
+        <file>011.jpg</file>
+        <file>012.jpg</file>
+        <file>013.jpg</file>
+        <file>014.jpg</file>
+        <file>015.jpg</file>
+        <file>016.jpg</file>
+        <file>017.jpg</file>
+        <file>018.jpg</file>
+        <file>019.jpg</file>
+    </qresource>
+    <qresource prefix="/music">
+        <file>musicLike.png</file>
+        <file>musicUnlike.png</file>
+    </qresource>
+</RCC>

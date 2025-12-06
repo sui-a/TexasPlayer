@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36203.30
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TexasPlayer", "TexasPlayer\TexasPlayer.vcxproj", "{5C3342A6-6EED-4120-8D96-7809CCA05484}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C3342A6-6EED-4120-8D96-7809CCA05484}.Debug|x64.ActiveCfg = Debug|x64
+		{5C3342A6-6EED-4120-8D96-7809CCA05484}.Debug|x64.Build.0 = Debug|x64
+		{5C3342A6-6EED-4120-8D96-7809CCA05484}.Release|x64.ActiveCfg = Release|x64
+		{5C3342A6-6EED-4120-8D96-7809CCA05484}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC996297-D7EB-47BF-9D75-AE4F7586233B}
+	EndGlobalSection
+EndGlobal
