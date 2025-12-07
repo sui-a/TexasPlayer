@@ -142,7 +142,7 @@ void lrcInterface::readLyrics(QString path)
 	}
 
 	path.push_back("lrc");
-	qDebug() << path;
+
 	//读取歌词文件
 	QFile file("test.txt");
 	if (!file.open(QIODevice::ReadOnly)) //以只读形式打开 
@@ -196,5 +196,10 @@ qint64 lrcInterface::calculateTheTimestamp(QString& timeString)
 
 	qint64 totalMs = (minutes * 60 + seconds) * 1000 + milliseconds;
 	return totalMs;
+}
+
+void lrcInterface::setMusicName(QString name)
+{
+	ui.name->setText(name);
 }
 

@@ -58,6 +58,9 @@ public:
 	void playTotalTimeRefresh(qint64 time);
     //更新进度条当前时间
     void playCurrentTimeRefresh(qint64 time);
+    //更新歌曲信息
+    void setMusicInfo(QString name, QString author);
+
     //更新按键状态
     void playRefresh();
     void playModeRefresh();
@@ -70,6 +73,7 @@ public:
 
     //通过路径读取歌词
     void setIrc(QString path);
+
     
 public slots:
     //播放时间接收槽函数
@@ -91,6 +95,7 @@ private slots:
     void on_playDown_clicked();
     void on_playMode_clicked();
     void on_lyrics_clicked();
+	void on_min_clicked();
 protected:
     //对鼠标点击事件进行重载
     void mousePressEvent(QMouseEvent* event) override;

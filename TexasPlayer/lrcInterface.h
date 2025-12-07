@@ -43,6 +43,8 @@ public:
 	void refreshLyrics();
 	//读取歌词
 	void readLyrics(QString path);
+	//设置当前歌曲名称
+	void setMusicName(QString name);
 
 	//解析字符串并存储
 	void parseAndStoreLyrics(QString& lrcContent);

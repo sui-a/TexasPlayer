@@ -106,6 +106,7 @@
     <ClCompile Include="MusicList.cpp" />
     <ClCompile Include="MusicMonomer.cpp" />
     <ClCompile Include="MusicSQL.cpp" />
+    <ClCompile Include="signal.cpp" />
     <ClCompile Include="volume.cpp" />
     <QtRcc Include="TexasPlayer.qrc" />
     <QtUic Include="btfrom.ui" />
@@ -149,6 +150,7 @@
     <QtMoc Include="volume.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="signal.h" />
     <QtMoc Include="MusicSQL.h" />
     <QtMoc Include="lrcInterface.h" />
     <ClInclude Include="MusicList.h" />

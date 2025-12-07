@@ -84,8 +84,9 @@ private:
 private:
 	void advance(int direction);
 	bool SearchingThroughHistory(MusicMonomer* tar);
-	
-	//根据方向切换歌曲
+	//通过url获取歌曲名
+	QString getMusicNameByUrl(QString url);
+
 
 
 private:

@@ -73,6 +73,9 @@
     <ClCompile Include="MusicSQL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="signal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="btfrom.h">
@@ -134,6 +137,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MusicMonomer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="signal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

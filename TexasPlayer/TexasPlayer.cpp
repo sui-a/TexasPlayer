@@ -119,7 +119,12 @@ void TexasPlayer::systemTraySet()
 
 void TexasPlayer::on_quit_clicked()
 {
-	this->close();
+	this->hide();
+}
+
+void TexasPlayer::on_min_clicked()
+{
+    showMinimized();
 }
 
 void TexasPlayer::mousePressEvent(QMouseEvent* event)
@@ -164,8 +169,6 @@ void TexasPlayer::shadowSet()
 {
     setAttribute(Qt::WA_TranslucentBackground, true);
     //setStyleSheet("#TexasPlayerClass {background-color: rgba(255, 255, 255, 0);}");  //设置失效问题
-    
-
     
     QGraphicsDropShadowEffect* shadow = new QGraphicsDropShadowEffect(this);
     //设置阴影距离
@@ -636,4 +639,13 @@ QPoint TexasPlayer::getVisiblePos()
 void TexasPlayer::setIrc(QString path)
 {
     _lrc->readLyrics(path);
+}
+
+void TexasPlayer::setMusicInfo(QString name, QString author)
+{
+    //
+	ui.musicName->setText("歌曲名: " + name);
+	ui.musicAuthor->setText("作者: " + author);
+    //让歌词界面更新作者信息
+    _lrc->setMusicName(name);
 }

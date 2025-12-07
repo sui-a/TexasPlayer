@@ -164,10 +164,42 @@ border-image: url(:/pullDown.png);</string>
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="widget" native="true">
+          <widget class="QWidget" name="headBody" native="true">
            <property name="styleSheet">
             <string notr="true"/>
            </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>40</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="name">
+              <property name="styleSheet">
+               <string notr="true">font-size: 24px;      /* 字体大小 */
+font-weight: 400;     /* 标准粗细 */
+color: #888888;</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>

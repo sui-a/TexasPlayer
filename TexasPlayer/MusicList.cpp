@@ -381,9 +381,33 @@ void MusicList::playMusic(QString id, QString style)
 			//不为空
 			_parent->playInit(_musicPlayer.duration());
 			_parent->setIrc(_defaultHead[n]->getUrl());
+
+			_parent->setMusicInfo(getMusicNameByUrl(_defaultHead[n]->getUrl()), "未知");
 		}
 
 	}
+}
+
+QString MusicList:: getMusicNameByUrl(QString url)
+{
+	QString temp = url;
+	temp.replace('\\', '/');
+
+	// 2. 切掉路径（找到最后一个 '/' 的位置）
+	int slashIndex = temp.lastIndexOf('/');
+
+	// 如果找到了 '/'，就截取它后面的部分；没找到就说明整个字符串可能就是文件名
+	QString fileName = (slashIndex != -1) ? temp.mid(slashIndex + 1) : temp;
+
+	// 3. 去掉后缀（找到文件名中最后一个 '.' 的位置）
+	int dotIndex = fileName.lastIndexOf('.');
+
+	// 4. 如果找到了 '.'，只保留它左边的部分
+	if (dotIndex != -1) {
+		fileName = fileName.left(dotIndex);
+	}
+
+	return fileName;
 }
 
 bool MusicList::SearchingThroughHistory(MusicMonomer* tar)

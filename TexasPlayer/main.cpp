@@ -2,10 +2,16 @@
 #include "TexasPlayer.h"
 #include <QtWidgets/QApplication>
 #include <windows.h>
+#include "signal.h"
 #include "MusicSQL.h"
 
 int main(int argc, char *argv[])
 {
+    if (!signal::setupSignalHandlers())
+    {
+		return 0; // 已有实例在运行，退出当前实例
+    }
+
     //打开控制台
     if (AttachConsole(ATTACH_PARENT_PROCESS) == 0)
     {
